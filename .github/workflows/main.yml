@@ -370,7 +370,7 @@ class _ManagerPanelPageState extends State<ManagerPanelPage> {
               var now = Jalali.now();
               String csv = appState.exportCsvForMonth(now.year, now.month);
               showDialog(context:context, builder:(_)=>AlertDialog(title:Text('گزارش CSV ماه جاری'), content:SingleChildScrollView(child:Text(csv)), actions:[TextButton(onPressed:()=>Navigator.pop(context), child:Text('باشه'))]));
-            }, child:Text('نمایش گزارش ماه جاری(CSV)')),
+            }, child: Text ('نمایش گزارش ماه جاری(CSV)')),
           ],
         ),
       ),
