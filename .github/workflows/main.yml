@@ -15,18 +15,18 @@ class EstakhrApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title:'pool iranian garden'
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
+      debugShowCheckedModeBanner:false,
+      localizationsDelegates:[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [const Locale('fa', 'IR')],
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        fontFamily: 'IranSans',
+      supportedLocales:[const Locale('fa', 'IR')],
+      theme:ThemeData(
+        primarySwatch:Colors.green,
+        fontFamily:'IranSans',
       ),
-      home: LoginPage(),
+      home:LoginPage(),
     );
   }
 }
@@ -52,22 +52,22 @@ class Reservation {
   });
   Map<String,dynamic> toMap(){
     return {
-      'block': block,
-      'unit': unit,
-      'date': '${date.year}/${date.month.toString().padLeft(2,'0')}/${date.day.toString().padLeft(2,'0')}',
-      'slot': slotLabel,
-      'status': status,
+      'block':block,
+      'unit':unit,
+      'date':'${date.year}/${date.month.toString().padLeft(2,'0')}/${date.day.toString().padLeft(2,'0')}',
+      'slot':slotLabel,
+      'status':status,
     };
   }
 }
 
 class AppState extends ChangeNotifier {
-  // slots are fixed: 11-13,14-16,17-19,20-22
+  // slots are fixed:11-13,14-16,17-19,20-22
   List<Slot> slots = [
-    Slot(id: 's1', label: '11:00-13:00'),
-    Slot(id: 's2', label: '14:00-16:00'),
-    Slot(id: 's3', label: '17:00-19:00'),
-    Slot(id: 's4', label: '20:00-22:00'),
+    Slot(id:'s1', label:'11:00-13:00'),
+    Slot(id:'s2', label:'14:00-16:00'),
+    Slot(id:'s3', label:'17:00-19:00'),
+    Slot(id:'s4', label:'20:00-22:00'),
   ];
 
   // reservations in-memory
@@ -134,46 +134,46 @@ class _LoginPageState extends State<LoginPage> {
   void goLogin(){
     String unit = unitController.text.trim();
     if(unit.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('کد واحد را وارد کنید')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('کد واحد را وارد کنید')));
       return;
     }
     String code = '${selectedBlock}${unit}';
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage(unitCode: code)));
+    Navigator.push(context, MaterialPageRoute(builder:(_) => HomePage(unitCode:code)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('استخر باغ ایرانی'),
-        centerTitle: true,
+      appBar:AppBar(
+        title:Text('استخر باغ ایرانی'),
+        centerTitle:true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
+      body:Padding(
+        padding:EdgeInsets.all(16),
+        child:Column(
+          children:[
             SizedBox(height:20),
-            Icon(Icons.pool, size:80, color: Colors.green),
+            Icon(Icons.pool, size:80, color:Colors.green),
             SizedBox(height:12),
-            Text('ورود با کد واحد', style: TextStyle(fontSize:18)),
+            Text('ورود با کد واحد', style:TextStyle(fontSize:18)),
             SizedBox(height:12),
             Row(
-              children: [
+              children:[
                 DropdownButton<String>(
-                  value: selectedBlock,
-                  items: ['A','B','C','D'].map((b)=>DropdownMenuItem(child: Text(b), value: b)).toList(),
-                  onChanged: (v){ setState(()=>selectedBlock=v!); },
+                  value:selectedBlock,
+                  items:['A','B','C','D'].map((b)=>DropdownMenuItem(child:Text(b), value:b)).toList(),
+                  onChanged:(v){ setState(()=>selectedBlock=v!); },
                 ),
                 SizedBox(width:12),
-                Expanded(child: TextField(controller: unitController, decoration: InputDecoration(labelText: 'شماره واحد (مثال: 101)'))),
+                Expanded(child:TextField(controller:unitController, decoration:InputDecoration(labelText:'شماره واحد (مثال 101)'))),
               ],
             ),
             SizedBox(height:20),
-            ElevatedButton(onPressed: goLogin, child: Text('ورود')),
+            ElevatedButton(onPressed:goLogin, child:Text('ورود')),
             SizedBox(height:12),
-            TextButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (_) => ManagerLoginPage()));
-            }, child: Text('ورود مدیر'))
+            TextButton(onPressed:(){
+              Navigator.push(context, MaterialPageRoute(builder:(_) => ManagerLoginPage()));
+            }, child:Text('ورود مدیر'))
           ],
         ),
       ),
@@ -195,41 +195,41 @@ class _HomePageState extends State<HomePage> {
     String block = widget.unitCode.substring(0,1);
     String unit = widget.unitCode.substring(1);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('سلام ${widget.unitCode}'),
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (_) => MyReservationsPage(unitCode: widget.unitCode)));
-          }, icon: Icon(Icons.list))
+      appBar:AppBar(
+        title:Text('سلام ${widget.unitCode}'),
+        actions:[
+          IconButton(onPressed:(){
+            Navigator.push(context, MaterialPageRoute(builder:(_) => MyReservationsPage(unitCode:widget.unitCode)));
+          }, icon:Icon(Icons.list))
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Text('سانس‌های موجود برای فردا: ${tomorrow.formatCompactDate()}', style: TextStyle(fontSize:16)),
+      body:Padding(
+        padding:EdgeInsets.all(12),
+        child:Column(
+          children:[
+            Text('سانس‌های موجود برای فردا:${tomorrow.formatCompactDate()}', style:TextStyle(fontSize:16)),
             SizedBox(height:8),
             Expanded(
-              child: ListView.builder(
-                itemCount: appState.slots.length,
-                itemBuilder: (c,i){
+              child:ListView.builder(
+                itemCount:appState.slots.length,
+                itemBuilder:(c,i){
                   var slot = appState.slots[i];
                   // check if slot already reserved by someone for that date
                   var reserved = appState.reservationsForDate(tomorrow).where((r)=>r.slotLabel==slot.label && r.status=='approved').isNotEmpty;
-                  var myRequestsCount = appState.reservations.where((r)=>r.block==block && r.unit==unit && r.date.year==tomorrow.year && r.date==null ? false : r.date.month==tomorrow.month && r.date.day==tomorrow.day).length;
+                  var myRequestsCount = appState.reservations.where((r)=>r.block==block && r.unit==unit && r.date.year==tomorrow.year && r.date==null ? false :r.date.month==tomorrow.month && r.date.day==tomorrow.day).length;
                   bool canRequest = !reserved && myRequestsCount < 2;
                   return Card(
-                    child: ListTile(
-                      title: Text(slot.label),
-                      subtitle: Text(reserved ? 'قبلاً رزرو شده' : 'آزاد'),
-                      trailing: ElevatedButton(
-                        onPressed: canRequest ? (){
+                    child:ListTile(
+                      title:Text(slot.label),
+                      subtitle:Text(reserved ? 'قبلاً رزرو شده' :'آزاد'),
+                      trailing:ElevatedButton(
+                        onPressed:canRequest ? (){
                           // create pending reservation
-                          var res = Reservation(block: block, unit: unit, date: tomorrow, slotLabel: slot.label, status: 'pending');
+                          var res = Reservation(block:block, unit:unit, date:tomorrow, slotLabel:slot.label, status:'pending');
                           appState.addReservation(res);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('درخواست رزرو ثبت شد. منتظر تایید مدیر باشید.')));
-                        } : null,
-                        child: Text('رزرو'),
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('درخواست رزرو ثبت شد. منتظر تایید مدیر باشید.')));
+                        } :null,
+                        child:Text('رزرو'),
                       ),
                     ),
                   );
@@ -237,7 +237,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height:8),
-            Text('توضیح: رزرو برای فردا امکان‌پذیر است. هر واحد تا ۲ نوبت مجاز است.'),
+            Text('توضیح رزرو برای فردا امکان‌پذیر است. هر واحد تا ۲ نوبت مجاز است.'),
           ],
         ),
       ),
@@ -265,14 +265,14 @@ class _MyReservationsPageState extends State<MyReservationsPage> {
     String unit = widget.unitCode.substring(1);
     var myRes = appState.reservations.where((r)=>r.block==block && r.unit==unit).toList();
     return Scaffold(
-      appBar: AppBar(title: Text('رزروهای من')),
-      body: ListView.builder(
-        itemCount: myRes.length,
-        itemBuilder: (c,i){
+      appBar:AppBar(title:Text('رزروهای من')),
+      body:ListView.builder(
+        itemCount:myRes.length,
+        itemBuilder:(c,i){
           var r = myRes[i];
           return ListTile(
-            title: Text('${r.slotLabel} — ${r.date.formatCompactDate()}'),
-            subtitle: Text('وضعیت: ${r.status}'),
+            title:Text('${r.slotLabel} — ${r.date.formatCompactDate()}'),
+            subtitle:Text('وضعیت:${r.status}'),
           );
         },
       ),
@@ -289,24 +289,24 @@ class _ManagerLoginPageState extends State<ManagerLoginPage> {
   final passCtrl = TextEditingController();
   void login(){
     if(passCtrl.text=='admin123'){
-      Navigator.push(context, MaterialPageRoute(builder: (_) => ManagerPanelPage()));
+      Navigator.push(context, MaterialPageRoute(builder:(_) => ManagerPanelPage()));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('رمز اشتباه است')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('رمز اشتباه است')));
     }
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ورود مدیر'),
+      appBar:AppBar(
+        title:Text('ورود مدیر'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            TextField(controller: passCtrl, decoration: InputDecoration(labelText: 'رمز مدیر')),
+      body:Padding(
+        padding:EdgeInsets.all(12),
+        child:Column(
+          children:[
+            TextField(controller:passCtrl, decoration:InputDecoration(labelText:'رمز مدیر')),
             SizedBox(height:12),
-            ElevatedButton(onPressed: login, child: Text('ورود')),
+            ElevatedButton(onPressed:login, child:Text('ورود')),
           ],
         ),
       ),
@@ -325,29 +325,29 @@ class _ManagerPanelPageState extends State<ManagerPanelPage> {
   Widget build(BuildContext context) {
     var pending = appState.reservations.where((r)=>r.status=='pending').toList();
     return Scaffold(
-      appBar: AppBar(title: Text('پنل مدیر')),
-      body: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Text('درخواست‌های در انتظار تایید', style: TextStyle(fontSize:16)),
+      appBar:AppBar(title:Text('پنل مدیر')),
+      body:Padding(
+        padding:EdgeInsets.all(12),
+        child:Column(
+          children:[
+            Text('درخواست‌های در انتظار تایید', style:TextStyle(fontSize:16)),
             Expanded(
-              child: ListView.builder(
-                itemCount: pending.length,
-                itemBuilder: (c,i){
+              child:ListView.builder(
+                itemCount:pending.length,
+                itemBuilder:(c,i){
                   var r = pending[i];
                   return Card(
-                    child: ListTile(
-                      title: Text('${r.block}${r.unit} — ${r.slotLabel}'),
-                      subtitle: Text('${r.date.formatCompactDate()}'),
-                      trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                        IconButton(onPressed: (){
+                    child:ListTile(
+                      title:Text('${r.block}${r.unit} — ${r.slotLabel}'),
+                      subtitle:Text('${r.date.formatCompactDate()}'),
+                      trailing:Row(mainAxisSize:MainAxisSize.min, children:[
+                        IconButton(onPressed:(){
                           // approve if slot not already approved
                           bool slotTaken = appState.reservationsForDate(r.date).where((x)=>x.slotLabel==r.slotLabel && x.status=='approved').isNotEmpty;
                           if(slotTaken){
                             // reject and notify
                             appState.updateReservationStatus(appState.reservations.indexOf(r), 'rejected');
-                            showDialog(context: context, builder: (_)=>AlertDialog(title: Text('رد شد'), content: Text('این سانس قبلاً رزرو شده است.'), actions: [TextButton(onPressed: ()=>Navigator.pop(context), child: Text('باشه'))]));
+                            showDialog(context:context, builder:(_)=>AlertDialog(title:Text('رد شد'), content:Text('این سانس قبلاً رزرو شده است.'), actions:[TextButton(onPressed:()=>Navigator.pop(context), child: Text('باشه'))]));
                           } else {
                             appState.updateReservationStatus(appState.reservations.indexOf(r), 'approved');
                             // notify (simple dialog)
